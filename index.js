@@ -36,9 +36,9 @@ app.get('/webhook', (req, res) => {
 
 app.post('/webhook', (req, res) => {
   let bodyMess = req.body
-  console.log(JSON.stringify(bodyMess, null, 2))
+  console.log(bodyMess, null, 2)
   if (bodyMess.object) {
-    console.log('bodyMess if in :-', JSON.stringify(bodyMess))
+    console.log('bodyMess if in :-', bodyMess)
     if (
       bodyMess.entry &&
       bodyMess.entry[0].changes &&
@@ -195,7 +195,7 @@ app.post('/webhook', (req, res) => {
 
       axios(config)
         .then(function (response) {
-          console.log(JSON.stringify('response', response.data))
+          console.log('response', response.data)
           res.sendStatus(200)
         })
         .catch(function (error) {
