@@ -36,57 +36,56 @@ app.get('/webhook', (req, res) => {
 
 app.post('/webhook', (req, res) => {
   let bodyMess = req.body
-  console.log(bodyMess, null, 2)
   if (bodyMess.object) {
     console.log('bodyMess if in :-', bodyMess)
-    if (
-      bodyMess.entry &&
-      bodyMess.entry[0].changes &&
-      bodyMess.entry[0].changes[0].value.messages &&
-      bodyMess.entry[0].changes[0].value.messages[0]
-    ) {
-      let phone_number_id =
-        bodyMess.entry[0].changes[0].value.metadata.phone_number_id
-      let from = bodyMess.entry[0].changes[0].value.messages[0].from
-      let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body
+    // if (
+    //   bodyMess.entry &&
+    //   bodyMess.entry[0].changes &&
+    //   bodyMess.entry[0].changes[0].value.messages &&
+    //   bodyMess.entry[0].changes[0].value.messages[0]
+    // ) {
+    //   let phone_number_id =
+    //     bodyMess.entry[0].changes[0].value.metadata.phone_number_id
+    //   let from = bodyMess.entry[0].changes[0].value.messages[0].from
+    //   let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body
 
-      console.log('phone_number_id', phone_number_id)
-      console.log('from', from)
-      console.log('mess', mess)
+    //   console.log('phone_number_id', phone_number_id)
+    //   console.log('from', from)
+    //   console.log('mess', mess)
 
-      const Data = JSON.stringify({
-        messaging_product: 'whatsapp',
-        recipient_type: 'individual',
-        to: from,
-        type: 'text',
-        text: {
-          preview_url: false,
-          body: mess,
-        },
-      })
+    //   const Data = JSON.stringify({
+    //     messaging_product: 'whatsapp',
+    //     recipient_type: 'individual',
+    //     to: from,
+    //     type: 'text',
+    //     text: {
+    //       preview_url: false,
+    //       body: mess,
+    //     },
+    //   })
 
-      var config = {
-        method: 'post',
-        url: `https://graph.facebook.com/v15.0/${phone_number_id}/messages`,
-        headers: {
-          authorization: `Bearer ${API_token}`,
-          'Content-Type': 'application/json',
-        },
-        data: Data,
-      }
+    //   var config = {
+    //     method: 'post',
+    //     url: `https://graph.facebook.com/v15.0/${phone_number_id}/messages`,
+    //     headers: {
+    //       authorization: `Bearer ${API_token}`,
+    //       'Content-Type': 'application/json',
+    //     },
+    //     data: Data,
+    //   }
 
-      axios(config)
-        .then(function (response) {
-          console.log('response', response.data)
-          res.sendStatus(200)
-        })
-        .catch(function (error) {
-          console.log('error', error)
-          res.sendStatus(403)
-        })
-    } else {
-      res.sendStatus(403)
-    }
+    //   axios(config)
+    //     .then(function (response) {
+    //       console.log('response', response.data)
+    //       res.sendStatus(200)
+    //     })
+    //     .catch(function (error) {
+    //       console.log('error', error)
+    //       res.sendStatus(403)
+    //     })
+    // } else {
+    //   res.sendStatus(403)
+    // }
   } else {
     res.sendStatus(403)
   }
