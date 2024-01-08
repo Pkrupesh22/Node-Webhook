@@ -18,21 +18,21 @@ const Last_mess = `Thanks you for your reply.😊\n\nOur support executive will 
 app.get('/', (req, res) => {
   res.send('Webhook')
 })
-app.get('/webhook', (req, res) => {
-  let mode = req.query['hub.mode']
-  let challenge = req.query['hub.challenge']
-  let token = req.query['hub.verify_token']
+// app.get('/webhook', (req, res) => {
+//   let mode = req.query['hub.mode']
+//   let challenge = req.query['hub.challenge']
+//   let token = req.query['hub.verify_token']
 
-  if (mode && token) {
-    if (mode === 'subscribe' && token === my_token) {
-      res.status(200).send(challenge)
-    } else {
-      res.status(403)
-    }
-  } else {
-    res.status(403)
-  }
-})
+//   if (mode && token) {
+//     if (mode === 'subscribe' && token === my_token) {
+//       res.status(200).send(challenge)
+//     } else {
+//       res.status(403)
+//     }
+//   } else {
+//     res.status(403)
+//   }
+// })
 
 app.post('/webhook', (req, res) => {
   let bodyMess = req.body
