@@ -37,7 +37,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
   let bodyMess = req.body
   if (bodyMess.object) {
-    console.log('bodyMess if in :-', bodyMess)
+    console.log('bodyMess if in :-', JSON.stringify(bodyMess) )
     // if (
     //   bodyMess.entry &&
     //   bodyMess.entry[0].changes &&
