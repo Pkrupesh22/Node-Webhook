@@ -54,59 +54,6 @@ app.post('/webhook', (req, res) => {
       console.log('from', from)
       console.log('mess', mess)
 
-      let Replay
-
-      switch (mess) {
-        case 'Promotional SMS':
-        case '1. Promotional SMS':
-        case '1':
-          Replay = PromotionalSMS_1;
-          break;
-      
-        case 'Transactional SMS':
-        case '2. Transactional SMS':
-        case '2':
-          Replay = TransactionalSMS_2;
-          break;
-      
-        case 'Sender ID':
-        case '3. Sender ID':
-        case '3':
-        case '2.1. Less than 1 lakh':
-        case '2.2. 1-5 lakhs':
-        case '2.3. 5-10 lakhs':
-        case '2.4. More than 10 lakhs':
-        case '1.1. Less than 1 lakh':
-        case '1.2. 1-5 lakhs':
-        case '1.3. 5-10 lakhs':
-        case '1.4. More than 10 lakhs':
-        case 'Less than 1 lakh':
-        case '1-5 lakhs':
-        case '5-10 lakhs':
-        case 'More than 10 lakhs':
-        case '2.1':
-        case '2.2':
-        case '2.3':
-        case '2.4':
-        case '1.1':
-        case '1.2':
-        case '1.3':
-        case '1.4':
-        case '2.1.':
-        case '2.2.':
-        case '2.3.':
-        case '2.4.':
-        case '1.1.':
-        case '1.2.':
-        case '1.3.':
-        case '1.4.':
-          Replay = Last_mess;
-          break;
-      
-        default:
-          Replay = BulkSMS;
-          break;
-      }
       const Data = JSON.stringify({
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
@@ -114,7 +61,7 @@ app.post('/webhook', (req, res) => {
         type: 'text',
         text: {
           preview_url: false,
-          body: Replay,
+          body: mess,
         },
       })
 
