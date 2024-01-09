@@ -37,7 +37,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
   let bodyMess = req.body
   const data = JSON.stringify(bodyMess,null,2)
-  // console.log('req :-', data)
+  console.log('req :-', data)
   if (bodyMess.object) {
     if (
       bodyMess.entry &&
@@ -55,35 +55,35 @@ app.post('/webhook', (req, res) => {
       console.log('mess', mess)
 
       const Data = {
-        messaging_product: 'whatsapp',
-        recipient_type: 'individual',
-        to: from,
-        type: 'text',
-        text: {
-          preview_url: false,
-          body: mess,
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": from,
+        "type": "text",
+        "text": {
+          "preview_url": false,
+          "body": mess,
         },
       }
       
-      var config = {
-        method: 'post',
-        url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
-        headers: {
-          authorization: `Bearer ${API_token}`,
-          'Content-Type': 'application/json',
-        },
-        data: Data,
-      }
+      // var config = {
+      //   method: 'post',
+      //   url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
+      //   headers: {
+      //     authorization: `Bearer ${API_token}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   data: Data,
+      // }
 
-      axios(config)
-        .then(function (response) {
-          console.log('response', response.data)
-          res.sendStatus(200)
-        })
-        .catch(function (error) {
-          console.log('error', error)
-          res.sendStatus(403)
-        })
+      // axios(config)
+      //   .then(function (response) {
+      //     console.log('response', response.data)
+      //     res.sendStatus(200)
+      //   })
+      //   .catch(function (error) {
+      //     console.log('error', error)
+      //     res.sendStatus(403)
+      //   })
     } else {
       res.sendStatus(403)
     }
