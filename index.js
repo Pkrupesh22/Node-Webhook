@@ -54,7 +54,7 @@ app.post('/webhook', (req, res) => {
       console.log('from', from)
       console.log('mess', mess)
 
-      const Data = JSON.stringify({
+      const Data = {
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
         to: from,
@@ -63,7 +63,7 @@ app.post('/webhook', (req, res) => {
           preview_url: false,
           body: mess,
         },
-      })
+      }
 
       var config = {
         method: 'post',
