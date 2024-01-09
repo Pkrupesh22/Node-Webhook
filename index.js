@@ -34,9 +34,9 @@ app.get('/webhook', (req, res) => {
   }
 })
 
-app.post('/Webhook', (req, res) => {
+app.post('/webhook', (req, res) => {
   let bodyMess = req.body
-  console.log('req :-', JSON.stringify(req) )
+  console.log('req :-', JSON.stringify(req,null,2))
   // if (bodyMess.object) {
     // if (
     //   bodyMess.entry &&
