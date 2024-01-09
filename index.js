@@ -36,22 +36,22 @@ app.get('/webhook', (req, res) => {
 
 app.post('/Webhook', (req, res) => {
   let bodyMess = req.body
-  if (bodyMess.object) {
-    console.log('bodyMess if in :-', JSON.stringify(bodyMess) )
-    if (
-      bodyMess.entry &&
-      bodyMess.entry[0].changes &&
-      bodyMess.entry[0].changes[0].value.messages &&
-      bodyMess.entry[0].changes[0].value.messages[0]
-    ) {
-      let phone_number_id =
-        bodyMess.entry[0].changes[0].value.metadata.phone_number_id
-      let from = bodyMess.entry[0].changes[0].value.messages[0].from
-      let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body
+  console.log('req :-', JSON.stringify(req) )
+  // if (bodyMess.object) {
+    // if (
+    //   bodyMess.entry &&
+    //   bodyMess.entry[0].changes &&
+    //   bodyMess.entry[0].changes[0].value.messages &&
+    //   bodyMess.entry[0].changes[0].value.messages[0]
+    // ) {
+    //   let phone_number_id =
+    //     bodyMess.entry[0].changes[0].value.metadata.phone_number_id
+    //   let from = bodyMess.entry[0].changes[0].value.messages[0].from
+    //   let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body
 
-      console.log('phone_number_id', phone_number_id)
-      console.log('from', from)
-      console.log('mess', mess)
+    //   console.log('phone_number_id', phone_number_id)
+    //   console.log('from', from)
+    //   console.log('mess', mess)
 
       // const Data = JSON.stringify({
       //   messaging_product: 'whatsapp',
@@ -83,12 +83,12 @@ app.post('/Webhook', (req, res) => {
       //     console.log('error', error)
       //     res.sendStatus(403)
       //   })
-    } else {
-      res.sendStatus(403)
-    }
-  } else {
-    res.sendStatus(403)
-  }
+    // } else {
+    //   res.sendStatus(403)
+    // }
+  // } else {
+  //   res.sendStatus(403)
+  // }
 })
 
 app.listen(port, () => {
