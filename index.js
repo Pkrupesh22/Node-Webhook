@@ -1,7 +1,6 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const axios = require("axios");
-const getReplay =require("./controler")
 
 const app = express().use(body_parser.json());
 const port = process.env.PORT || 8000;
@@ -46,17 +45,42 @@ app.post("/webhook", (req, res) => {
       bodyMess.entry[0].changes[0].value.messages &&
       bodyMess.entry[0].changes[0].value.messages[0]
     ) {
-      const phone_number_id = bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
-      const from = bodyMess.entry[0].changes[0].value.messages[0].from;
+      let phone_number_id =
+        bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
+      let from = bodyMess.entry[0].changes[0].value.messages[0].from;
+      let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
 
-      const Replay = getReplay(bodyMess)
+      console.log("phone_number_id", phone_number_id);
+      console.log("from", from);
+      console.log("mess", mess);
 
+      //
+
+      // var config = {
+      //   method: 'post',
+      //   url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
+      //   headers: {
+      //     authorization: `Bearer ${API_token}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   data: Data,
+      // }
+
+      // axios(config)
+      //   .then(function (response) {
+      //     console.log('response', response.data)
+      //     res.sendStatus(200)
+      //   })
+      //   .catch(function (error) {
+      //     console.log('error', error)
+      //     res.sendStatus(403)
+      //   })
       let data = JSON.stringify({
         messaging_product: "whatsapp",
         recipient_type: "individual",
         to: from,
         type: "text",
-        text: { preview_url: false, body: Replay },
+        text: { preview_url: false, body: mess },
       });
       let config = {
         method: "post",
