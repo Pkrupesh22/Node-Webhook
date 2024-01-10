@@ -45,36 +45,15 @@ app.post("/webhook", (req, res) => {
       bodyMess.entry[0].changes[0].value.messages &&
       bodyMess.entry[0].changes[0].value.messages[0]
     ) {
-      let phone_number_id =
+      const phone_number_id =
         bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
-      let from = bodyMess.entry[0].changes[0].value.messages[0].from;
-      let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
+      const from = bodyMess.entry[0].changes[0].value.messages[0].from;
+      const mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
 
       console.log("phone_number_id", phone_number_id);
       console.log("from", from);
       console.log("mess", mess);
 
-      //
-
-      // var config = {
-      //   method: 'post',
-      //   url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
-      //   headers: {
-      //     authorization: `Bearer ${API_token}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      //   data: Data,
-      // }
-
-      // axios(config)
-      //   .then(function (response) {
-      //     console.log('response', response.data)
-      //     res.sendStatus(200)
-      //   })
-      //   .catch(function (error) {
-      //     console.log('error', error)
-      //     res.sendStatus(403)
-      //   })
       let data = JSON.stringify({
         messaging_product: "whatsapp",
         recipient_type: "individual",
