@@ -78,7 +78,7 @@ app.post('/webhook', (req, res) => {
       // axios(config)
       //   .then(function (response) {
       //     console.log('response', response.data)
-      //     res.sendStatus(200)
+           res.sendStatus(200)
       //   })
       //   .catch(function (error) {
       //     console.log('error', error)
