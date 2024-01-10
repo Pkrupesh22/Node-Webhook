@@ -34,7 +34,7 @@ app.get('/webhook', (req, res) => {
   }
 })
 
-app.post('/webhook', (req, res) => {
+app.post('/ook', (req, res) => {
   let bodyMess = req.body
   const data = JSON.stringify(bodyMess,null,2)
   console.log('req :-', data)
