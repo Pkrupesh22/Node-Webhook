@@ -78,12 +78,14 @@ app.post('/webhook', (req, res) => {
       // axios(config)
       //   .then(function (response) {
       //     console.log('response', response.data)
-           res.sendStatus(200)
+      //     res.sendStatus(200)
       //   })
       //   .catch(function (error) {
       //     console.log('error', error)
       //     res.sendStatus(403)
       //   })
+
+      let data = JSON.stringify({ "messaging_product": "whatsapp", "to": "917819830420", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }); let config = { method: 'post', maxBodyLength: Infinity, url: 'https://graph.facebook.com/v18.0/116168451372633/messages', headers: { 'Authorization': 'Bearer EAAWqeZCMrJ6sBO0txUZBVzTy8PKfE9PCMTOawGLKsYkYZBy05KZBNXkAe1VNFyBWRkDsUDqeRhpRaV7x4Ifeges7IXvAMhWhvYSCoHQFmBhnL2tEQBkCZBZCn6CFZAeHFaqh6Ua1W14IyG0nzDSXiVxC0vdzMMiEJZBBwafhwZBjgsEOUFRuRO5FZAnh72QEwi9NGGj7iRQS82HPzoYwsxUK9ssjiU79FUf8XD', 'Content-Type': 'application/json' }, data : data }; axios.request(config) .then((response) => { console.log(JSON.stringify(response.data)); res.sendStatus(200) }) .catch((error) => { console.log(error); res.sendStatus(403) });
     } else {
       res.sendStatus(403)
     }
