@@ -69,8 +69,7 @@ app.post("/webhook", (req, res) => {
         },
         data: data,
       };
-      axios
-        .request(config)
+      axios(config)
         .then((response) => {
           console.log("response.data",JSON.stringify(response.data));
           res.sendStatus(200);
