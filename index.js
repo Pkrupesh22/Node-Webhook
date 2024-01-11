@@ -4,8 +4,6 @@ const axios = require("axios");
 
 const app = express().use(body_parser.json());
 const port = process.env.PORT || 8000;
-const my_token = process.env.MYTOKEN;
-const API_token = process.env.API_TOKEN;
 
 const BulkSMS =
   "We are no.1 Bulk SMS service provider in India. Please select the service you want to apply for.Bulk  \n\n1. Promotional SMS \n2. Transactional SMS \n3. Sender ID";
@@ -24,7 +22,7 @@ app.get("/webhook", (req, res) => {
   let token = req.query["hub.verify_token"];
 
   if (mode && token) {
-    if (mode === "subscribe" && token === my_token) {
+    if (mode === "subscribe" && token === process.env.MYTOKEN) {
       res.send(challenge);
     } else {
       res.status(403);
@@ -66,8 +64,7 @@ app.post("/webhook", (req, res) => {
         maxBodyLength: Infinity,
         url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
         headers: {
-          Authorization:
-            "Bearer EAAWqeZCMrJ6sBO0txUZBVzTy8PKfE9PCMTOawGLKsYkYZBy05KZBNXkAe1VNFyBWRkDsUDqeRhpRaV7x4Ifeges7IXvAMhWhvYSCoHQFmBhnL2tEQBkCZBZCn6CFZAeHFaqh6Ua1W14IyG0nzDSXiVxC0vdzMMiEJZBBwafhwZBjgsEOUFRuRO5FZAnh72QEwi9NGGj7iRQS82HPzoYwsxUK9ssjiU79FUf8XD",
+          Authorization:process.env.API_TOKEN,
           "Content-Type": "application/json",
         },
         data: data,
@@ -75,10 +72,12 @@ app.post("/webhook", (req, res) => {
       axios
         .request(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          console.log("response.data",JSON.stringify(response.data));
+          res.sendStatus(200);
         })
         .catch((error) => {
           console.log(error);
+          res.sendStatus(403);
         });
     } else {
       res.sendStatus(403);
@@ -88,6 +87,6 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("webhook is listening on srver");
 });
