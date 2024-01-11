@@ -1,6 +1,7 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const axios = require("axios");
+const GetUserMess = require("./controller");
 
 const app = express().use(body_parser.json());
 const port = process.env.PORT || 8000;
@@ -23,6 +24,7 @@ app.get("/webhook", (req, res) => {
 
   if (mode && token) {
     if (mode === "subscribe" && token === process.env.MYTOKEN) {
+      console.log("getWebUrl",JSON.stringify(challenge))
       res.send(challenge);
     } else {
       res.status(403);
@@ -32,58 +34,52 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-app.post("/webhook", (req, res) => {
-  let bodyMess = req.body;
-  const data = JSON.stringify(bodyMess, null, 2);
-  console.log("req :-", data);
-  if (bodyMess.object) {
-    if (
-      // bodyMess.entry &&
-      // bodyMess.entry[0].changes &&
-      // bodyMess.entry[0].changes[0].value.messages &&
-      bodyMess.entry[0].changes[0].value.messages[0]
-    ) {
-      const phone_number_id =
-        bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
-      const from = bodyMess.entry[0].changes[0].value.messages[0].from;
-      const mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
+app.post("/webhook", GetUserMess, (req, res) => {
+  let Userbody = req.UserBody;
+  // const data = JSON.stringify(bodyMess, null, 2);
+  // console.log("req :-", data);
+  // if (bodyMess.object) {
+  //   if (
+  //     bodyMess.entry &&
+  //     bodyMess.entry[0].changes &&
+  //     bodyMess.entry[0].changes[0].value.messages &&
+  //     bodyMess.entry[0].changes[0].value.messages[0]
+  //   ) {
+  //     let phone_number_id =
+  //       bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
+  //     let from = bodyMess.entry[0].changes[0].value.messages[0].from;
+  //     let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
 
-      console.log("phone_number_id", phone_number_id);
-      console.log("from", from);
-      console.log("mess", mess);
+  console.log("Userbody", JSON.stringify(Userbody));
+  // console.log("from", from);
+  // console.log("mess", mess);
 
-      let data = JSON.stringify({
-        messaging_product: "whatsapp",
-        recipient_type: "individual",
-        to: from,
-        type: "text",
-        text: { preview_url: false, body: mess },
-      });
-      let config = {
-        method: "post",
-        maxBodyLength: Infinity,
-        url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
-        headers: {
-          Authorization:process.env.API_TOKEN,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-      axios(config)
-        .then((response) => {
-          console.log("response.data",JSON.stringify(response.data));
-          res.sendStatus(200);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.sendStatus(403);
-        });
-    } else {
-      res.sendStatus(403);
-    }
-  } else {
-    res.sendStatus(403);
-  }
+  let data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: from,
+    type: "text",
+    text: { preview_url: false, body: mess },
+  });
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
+    headers: {
+      Authorization: process.env.API_TOKEN,
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+  axios(config)
+    .then((response) => {
+      console.log("response.data", JSON.stringify(response.data));
+      res.status(200).send(true);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(403).send(false);
+    });
 });
 
 app.listen(process.env.PORT || 8000, () => {
