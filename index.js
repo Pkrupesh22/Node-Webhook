@@ -34,15 +34,15 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-app.post("/web", (req, res) => {
+app.post("/webhook", (req, res) => {
   let bodyMess = req.body;
   const data = JSON.stringify(bodyMess, null, 2);
   console.log("req :-", data);
   if (bodyMess.object) {
     if (
-      bodyMess.entry &&
-      bodyMess.entry[0].changes &&
-      bodyMess.entry[0].changes[0].value.messages &&
+      // bodyMess.entry &&
+      // bodyMess.entry[0].changes &&
+      // bodyMess.entry[0].changes[0].value.messages &&
       bodyMess.entry[0].changes[0].value.messages[0]
     ) {
       const phone_number_id =
