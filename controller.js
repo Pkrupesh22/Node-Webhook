@@ -1,7 +1,7 @@
 const GetUserMess = (req, res , next) => {
   let bodyMess = req.body;
-  const data = JSON.stringify(bodyMess, null, 2);
-  console.log("req :-", data);
+//   const data = JSON.stringify(bodyMess, null, 2);
+//   console.log("req :-", data);
   if (bodyMess.object) {
     if (
       bodyMess.entry &&

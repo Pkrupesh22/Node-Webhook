@@ -36,35 +36,18 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", GetUserMess, (req, res) => {
   let Userbody = req.UserBody;
-  // const data = JSON.stringify(bodyMess, null, 2);
-  // console.log("req :-", data);
-  // if (bodyMess.object) {
-  //   if (
-  //     bodyMess.entry &&
-  //     bodyMess.entry[0].changes &&
-  //     bodyMess.entry[0].changes[0].value.messages &&
-  //     bodyMess.entry[0].changes[0].value.messages[0]
-  //   ) {
-  //     let phone_number_id =
-  //       bodyMess.entry[0].changes[0].value.metadata.phone_number_id;
-  //     let from = bodyMess.entry[0].changes[0].value.messages[0].from;
-  //     let mess = bodyMess.entry[0].changes[0].value.messages[0].text.body;
-
   console.log("Userbody", JSON.stringify(Userbody));
-  // console.log("from", from);
-  // console.log("mess", mess);
-
   let data = JSON.stringify({
     messaging_product: "whatsapp",
     recipient_type: "individual",
-    to: from,
+    to: Userbody.from,
     type: "text",
-    text: { preview_url: false, body: mess },
+    text: { preview_url: false, body: Userbody.mess },
   });
   let config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
+    url: `https://graph.facebook.com/v18.0/${Userbody.phone_number_id}/messages`,
     headers: {
       Authorization: process.env.API_TOKEN,
       "Content-Type": "application/json",
