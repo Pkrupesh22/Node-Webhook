@@ -15,7 +15,7 @@ const server = app.listen(8000, () => {
 // Create a Socket.IO instance and configure it to allow connections from client URL
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000"
+    origin: "https://wcm-react-app.onrender.com"
   }
 });
 
