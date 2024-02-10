@@ -1,13 +1,18 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const axios = require("axios");
-
+const http = require('http').Server(express());
+const io = require('socket.io')(http);
 const GetUserMess = require("./controller");
 
 const app = express().use(body_parser.json());
-const http = require('http').Server(app);
-const io = require('socket.io')(http)
-// const BulkSMS =
+// const NewIO = new io({
+//   cors: {
+//     origin: "http://localhost:3000"
+//   }
+// })
+
+// const BulkSMS =    
 //   "We are no.1 Bulk SMS service provider in India. Please select the service you want to apply for.Bulk  \n\n1. Promotional SMS \n2. Transactional SMS \n3. Sender ID";
 // const PromotionalSMS_1 =
 //   "You have selected option\n1. Promotional SMS\n\nPlease select the Quantity option.\n\nReply with option name or number (2.1 or 2.3 or 1 lack)\n\n1.1. Less then 1 lack \n1.2. 1-5 lacks \n1.3. 5-10 lacks \n1.4. More then 10 lacks";
@@ -44,7 +49,7 @@ app.post("/webhook", GetUserMess, (req, res) => {
 
   io.on('connection', (socket)=> {
     console.log("a user connection")
-
+  
     socket.on('disconnect' ,()=>{
       console.log("use disconnect")
     })
