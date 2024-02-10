@@ -1,11 +1,19 @@
 const express = require("express");
-const body_parser = require("body-parser");
+const bodyParser = require("body-parser");
 const axios = require("axios");
 const http = require('http').Server(express());
-const io = require('socket.io')(http);
+const { Server } = require('socket.io');  // Import the Server class from socket.io
 const GetUserMess = require("./controller");
+const cors = require("cors"); // Import the cors middleware
 
-const app = express().use(body_parser.json());
+const app = express().use(bodyParser.json());
+
+// Enable CORS for all routes, including Socket.io
+app.use(cors());
+
+
+
+
 // const NewIO = new io({
 //   cors: {
 //     origin: "http://localhost:3000"
@@ -39,7 +47,11 @@ app.get("/webhook", (req, res) => {
     res.status(403);
   }
 });
-
+const io = new Server(http, {
+  cors: {
+    origin: "http://localhost:3000"
+  }
+});
 io.on('connection', (socket)=> {
   console.log("a user connection")
 
