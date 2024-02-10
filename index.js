@@ -40,21 +40,21 @@ app.get("/webhook", (req, res) => {
   }
 });
 
+io.on('connection', (socket)=> {
+  console.log("a user connection")
+
+  socket.on('disconnect' ,()=>{
+    console.log("use disconnect")
+  })
+})
+
 app.post("/webhook", GetUserMess, (req, res) => {
   let Userbody = req.UserBody;
-
-  const mess = req.UserBody.mess
-  const from = req.UserBody.from
-  const phone_number_id = req.UserBody.phone_number_id
-
-  io.on('connection', (socket)=> {
-    console.log("a user connection")
-  
-    socket.on('disconnect' ,()=>{
-      console.log("use disconnect")
-    })
-  })
-
+  // const mess = req.UserBody.mess
+  // const from = req.UserBody.from
+  // const phone_number_id = req.UserBody.phone_number_id
+  io.emit('message', Userbody);
+  res.status(200).send(true);
   // let data = JSON.stringify({
   //   messaging_product: "whatsapp",
   //   recipient_type: "individual",
