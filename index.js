@@ -50,6 +50,7 @@ io.on('connection', (socket)=> {
 
 app.post("/webhook", GetUserMess, (req, res) => {
   let Userbody = req.UserBody;
+  console.log(JSON.stringify(Userbody))
   // const mess = req.UserBody.mess
   // const from = req.UserBody.from
   // const phone_number_id = req.UserBody.phone_number_id
