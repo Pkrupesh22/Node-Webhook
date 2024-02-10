@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const http = require('http').Server(express());
 const { Server } = require('socket.io');  // Import the Server class from socket.io
 const GetUserMess = require("./controller");
 // const cors = require("cors"); // Import the cors middleware
@@ -29,7 +28,6 @@ const app = express().use(bodyParser.json());
 // const Last_mess = `Thanks you for your reply.😊\n\nOur support executive will get back to you very soon.`;
 
 app.get("/", (req, res) => {
-  
 
   res.send("Webhook");
 });
@@ -49,7 +47,10 @@ app.get("/webhook", (req, res) => {
     res.status(403);
   }
 });
-const io = new Server(http, {
+const server = app.listen(8000, () => {
+  console.log("webhook is listening on server", 8000);
+});
+const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000"
   }
@@ -95,6 +96,6 @@ app.post("/webhook", GetUserMess, (req, res) => {
     });
 });
 
-http.listen( 8000, () => {
-  console.log("webhook is listening on srver" ,8000);
-});
+// http.listen( 8000, () => {
+//   console.log("webhook is listening on srver" ,8000);
+// });
