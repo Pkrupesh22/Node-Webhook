@@ -4,12 +4,12 @@ const axios = require("axios");
 const http = require('http').Server(express());
 const { Server } = require('socket.io');  // Import the Server class from socket.io
 const GetUserMess = require("./controller");
-const cors = require("cors"); // Import the cors middleware
+// const cors = require("cors"); // Import the cors middleware
 
 const app = express().use(bodyParser.json());
 
 // Enable CORS for all routes, including Socket.io
-app.use(cors());
+// app.use(cors());
 
 
 
