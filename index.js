@@ -29,6 +29,8 @@ const app = express().use(bodyParser.json());
 // const Last_mess = `Thanks you for your reply.😊\n\nOur support executive will get back to you very soon.`;
 
 app.get("/", (req, res) => {
+  
+
   res.send("Webhook");
 });
 app.get("/webhook", (req, res) => {
@@ -54,7 +56,7 @@ const io = new Server(http, {
 });
 io.on('connection', (socket)=> {
   console.log("a user connection")
-
+  io.emit('message', {Userbody:"Krupesh"});
   socket.on('disconnect' ,()=>{
     console.log("use disconnect")
   })
@@ -62,36 +64,35 @@ io.on('connection', (socket)=> {
 
 app.post("/webhook", GetUserMess, (req, res) => {
   let Userbody = req.UserBody;
-  console.log(JSON.stringify(Userbody))
-  // const mess = req.UserBody.mess
-  // const from = req.UserBody.from
-  // const phone_number_id = req.UserBody.phone_number_id
   io.emit('message', Userbody);
-  res.status(200).send(true);
-  // let data = JSON.stringify({
-  //   messaging_product: "whatsapp",
-  //   recipient_type: "individual",
-  //   to: from,
-  //   type: "text",
-  //   text: { preview_url: false, body: mess },
-  // });
-  // let config = {
-  //   method: "post",
-  //   maxBodyLength: Infinity,
-  //   url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
-  //   headers: {
-  //     Authorization: process.env.API_TOKEN,
-  //     "Content-Type": "application/json",
-  //   },
-  //   data: data,
-  // };
-  // axios(config)
-  //   .then((response) => {
-  //     res.status(200).send(true);
-  //   })
-  //   .catch((error) => {
-  //     res.status(403).send(false);
-  //   });
+  console.log("Userbody",JSON.stringify(Userbody))
+  const mess = req.UserBody.mess
+  const from = req.UserBody.from
+  const phone_number_id = req.UserBody.phone_number_id
+  let data = JSON.stringify({
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: from,
+    type: "text",
+    text: { preview_url: false, body: mess },
+  });
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `https://graph.facebook.com/v18.0/${phone_number_id}/messages`,
+    headers: {
+      Authorization: process.env.API_TOKEN,
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+  axios(config)
+    .then((response) => {
+      res.status(200).send(true);
+    })
+    .catch((error) => {
+      res.status(403).send(false);
+    });
 });
 
 http.listen( 8000, () => {
